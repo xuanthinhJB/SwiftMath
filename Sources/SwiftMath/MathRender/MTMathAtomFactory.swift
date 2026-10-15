@@ -112,7 +112,9 @@ public class MTMathAtomFactory {
         "widetilde" :  "\u{0303}",
         "overleftarrow" :  "\u{20D6}",      // Combining left arrow above
         "overrightarrow" :  "\u{20D7}",     // Combining right arrow above (same as vec)
-        "overleftrightarrow" :  "\u{20E1}"  // Combining left right arrow above
+        "overleftrightarrow" :  "\u{20E1}",  // Combining left right arrow above
+        "overparen" :  "\u{23DC}",  // Top parenthesis: an arc over the content, e.g. arc AB
+        "wideparen" :  "\u{23DC}"
     ]
     
     private static let accentValueLock = NSLock()
@@ -255,6 +257,9 @@ public class MTMathAtomFactory {
         "mid" : MTMathAtom(type: .relation, value: "\u{2223}"),
         "parallel" : MTMathAtom(type: .relation, value: "\u{2225}"),
         "sim" : MTMathAtom(type: .relation, value: "\u{223C}"),
+        "backsim" : MTMathAtom(type: .relation, value: "\u{223D}"),
+        "frown" : MTMathAtom(type: .relation, value: "\u{2322}"),
+        "smile" : MTMathAtom(type: .relation, value: "\u{2323}"),
         "simeq" : MTMathAtom(type: .relation, value: "\u{2243}"),
         "cong" : MTMathAtom(type: .relation, value: "\u{2245}"),
         "approx" : MTMathAtom(type: .relation, value: "\u{2248}"),
@@ -888,7 +893,7 @@ public class MTMathAtomFactory {
             // Mark wide accents (\widehat, \widetilde, \widecheck)
             // These should stretch horizontally to cover content width
             // \hat, \tilde, \check are NOT wide - they use fixed-size accents
-            let wideAccents: Set<String> = ["widehat", "widetilde", "widecheck"]
+            let wideAccents: Set<String> = ["widehat", "widetilde", "widecheck", "overparen", "wideparen"]
             accent.isWide = wideAccents.contains(name)
 
             return accent

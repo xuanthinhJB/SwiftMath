@@ -1461,6 +1461,8 @@ class MTTypesetter {
             return "tilde"
         case "\u{030C}":  // COMBINING CARON (\check or \widecheck)
             return "caron"
+        case "\u{23DC}":  // TOP PARENTHESIS (\overparen, \wideparen): an arc over the content
+            return "uni23DC"
         default:
             return nil
         }

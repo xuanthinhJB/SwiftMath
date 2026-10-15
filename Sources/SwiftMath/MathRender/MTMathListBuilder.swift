@@ -767,6 +767,19 @@ public struct MTMathListBuilder {
             // The command is an accent
             accent.innerList = self.buildInternal(true)
             return accent;
+        } else if command == "overset" || command == "stackrel" {
+            // Only an arc is supported: \overset{\frown}{AB} is the usual way to write arc AB,
+            // and it becomes the same stretchy arc as \overparen{AB}.
+            let top = self.buildInternal(true)
+            let body = self.buildInternal(true)
+            guard let top, top.atoms.count == 1, top.atoms[0].nucleus == "\u{2322}",
+                  let arc = MTMathAtomFactory.accent(withName: "overparen") else {
+                let errorMessage = "\\\(command) is only supported with \\frown on top"
+                self.setError(.invalidCommand, message: errorMessage)
+                return nil
+            }
+            arc.innerList = body
+            return arc
         } else if command == "frac" {
             // A fraction command has 2 arguments
             let frac = MTFraction()
