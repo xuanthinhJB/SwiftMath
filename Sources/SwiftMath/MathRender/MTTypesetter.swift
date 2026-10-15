@@ -425,7 +425,7 @@ func getBboxDetails(_ bbox:CGRect, ascent:inout CGFloat, descent:inout CGFloat) 
 
  For detailed line breaking implementation notes, see `MULTILINE_IMPLEMENTATION_NOTES.md`.
  */
-class MTTypesetter {
+public class MTTypesetter {
     var font:MTFont!
     var displayAtoms = [MTDisplay]()
     var currentPosition = CGPoint.zero
@@ -441,7 +441,9 @@ class MTTypesetter {
     var spaced = false
     var maxWidth: CGFloat = 0  // Maximum width for line breaking, 0 means no constraint
 
-    static func createLineForMathList(_ mathList:MTMathList?, font:MTFont?, style:MTLineStyle) -> MTMathListDisplay? {
+    /// Typesets a math list without a view, e.g. to draw it into an image or to measure its
+    /// ascent and descent for placing it on a line of text.
+    public static func createLineForMathList(_ mathList:MTMathList?, font:MTFont?, style:MTLineStyle) -> MTMathListDisplay? {
         let finalizedList = mathList?.finalized
         // default is not cramped, no width constraint
         return self.createLineForMathList(finalizedList, font:font, style:style, cramped:false, maxWidth: 0)
