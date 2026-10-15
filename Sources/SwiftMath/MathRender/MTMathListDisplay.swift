@@ -89,13 +89,13 @@ public class MTDisplay:NSObject {
     /// The width of the display
     public var width:CGFloat = 0
     /// Position of the display with respect to the parent view or display.
-    var position = CGPoint.zero
+    public var position = CGPoint.zero
     /// The range of characters supported by this item
     public var range:NSRange=NSMakeRange(0, 0)
     /// Whether the display has a subscript/superscript following it.
     public var hasScript:Bool = false
     /// The text color for this display
-    var textColor: MTColor?
+    public var textColor: MTColor?
     /// The local color, if the color was mutated local with the color command
     var localTextColor: MTColor?
     /// The background color for this display
@@ -158,7 +158,7 @@ public class MTCTLineDisplay : MTDisplay {
         }
     }
     
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             let attrStr = attributedString!.mutableCopy() as! NSMutableAttributedString
@@ -261,7 +261,7 @@ public class MTMathListDisplay : MTDisplay {
         self.recomputeDimensions()
     }
   
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             for displayAtom in self.subDisplays {
@@ -381,7 +381,7 @@ public class MTFractionDisplay : MTDisplay {
         numerator!.position = CGPointMake(self.position.x + (self.width - numerator!.width)/2, self.position.y + self.numeratorUp)
     }
 
-    override var position: CGPoint {
+    override public var position: CGPoint {
         set {
             super.position = newValue
             self.updateDenominatorPosition()
@@ -390,7 +390,7 @@ public class MTFractionDisplay : MTDisplay {
         get { super.position }
     }
     
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             numerator?.textColor = newValue
@@ -437,7 +437,7 @@ class MTRadicalDisplay : MTDisplay {
      */
     public fileprivate(set) var degree:MTMathListDisplay?
     
-    override var position: CGPoint {
+    override public var position: CGPoint {
         set {
             super.position = newValue
             self.updateRadicandPosition()
@@ -446,7 +446,7 @@ class MTRadicalDisplay : MTDisplay {
         get { super.position }
     }
 
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             self.radicand?.textColor = newValue
@@ -719,7 +719,7 @@ class MTLargeOpLimitsDisplay : MTDisplay {
         }
     }
     
-    override var position: CGPoint {
+    override public var position: CGPoint {
         set {
             super.position = newValue
             self.updateLowerLimitPosition()
@@ -756,7 +756,7 @@ class MTLargeOpLimitsDisplay : MTDisplay {
         nucleus?.position = CGPointMake(self.position.x + (self.width - nucleus!.width)/2, self.position.y);
     }
     
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             self.upperLimit?.textColor = newValue
@@ -796,7 +796,7 @@ class MTLineDisplay : MTDisplay {
         self.range = range;
     }
     
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             inner?.textColor = newValue
@@ -804,7 +804,7 @@ class MTLineDisplay : MTDisplay {
         get { super.textColor }
     }
     
-    override var position: CGPoint {
+    override public var position: CGPoint {
         set {
             super.position = newValue
             self.updateInnerPosition()
@@ -860,7 +860,7 @@ class MTAccentDisplay : MTDisplay {
         self.range = range
     }
     
-    override var textColor: MTColor? {
+    override public var textColor: MTColor? {
         set {
             super.textColor = newValue
             accentee?.textColor = newValue
@@ -869,7 +869,7 @@ class MTAccentDisplay : MTDisplay {
         get { super.textColor }
     }
 
-    override var position: CGPoint {
+    override public var position: CGPoint {
         set {
             super.position = newValue
             self.updateAccenteePosition()
