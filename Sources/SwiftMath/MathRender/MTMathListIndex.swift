@@ -50,13 +50,13 @@ public class MTMathListIndex {
     }
     
     /// The index of the associated atom.
-    var atomIndex: Int
+    public internal(set) var atomIndex: Int
     
     /// The type of subindex, e.g. superscript, numerator etc.
-    var subIndexType: MTMathListSubIndexType = .none
+    public internal(set) var subIndexType: MTMathListSubIndexType = .none
     
     /// The index into the sublist.
-    var subIndex: MTMathListIndex?
+    public internal(set) var subIndex: MTMathListIndex?
     
     var finalIndex: Int {
         if self.subIndexType == .none {
