@@ -47,6 +47,9 @@ public class MTMathListIndex {
         case radicand
         /// The subindex indexes into the degree (only valid for radicals)
         case degree
+        /// The subindex indexes into the content under an accent, an overline or an underline
+        /// (\widehat{ABC}, \overline{AB}, \overrightarrow{AB}, an arc).
+        case innerList
     }
     
     /// The index of the associated atom.

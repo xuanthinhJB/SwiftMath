@@ -686,7 +686,12 @@ public struct MTMathListBuilder {
                     }
                 } else if atom.type == .accent {
                     if let accent = atom as? MTAccent {
-                        str += "\\\(MTMathAtomFactory.accentName(accent)!){\(mathListToString(accent.innerList!))}"
+                        if accent.nucleus == "\u{23DC}" {
+                            // An arc: the form every LaTeX renderer knows (KaTeX has no \overparen).
+                            str += "\\overset{\\frown}{\(mathListToString(accent.innerList!))}"
+                        } else {
+                            str += "\\\(MTMathAtomFactory.accentName(accent)!){\(mathListToString(accent.innerList!))}"
+                        }
                     }
                 } else if atom.type == .largeOperator {
                     let op = atom as! MTLargeOperator

@@ -45,6 +45,8 @@ extension MTDisplay {
         case let line as MTCTLineDisplay: return line.lineClosestIndex(to: point)
         case let fraction as MTFractionDisplay: return fraction.fractionClosestIndex(to: point)
         case let radical as MTRadicalDisplay: return radical.radicalClosestIndex(to: point)
+        case let accent as MTAccentDisplay: return wrapperClosestIndex(to: point, inner: accent.accentee)
+        case let line as MTLineDisplay: return wrapperClosestIndex(to: point, inner: line.inner)
         default: return nil
         }
     }
@@ -56,11 +58,21 @@ extension MTDisplay {
         switch self {
         case let list as MTMathListDisplay: return list.listCaretPosition(for: index)
         case let line as MTCTLineDisplay: return line.lineCaretPosition(for: index)
-        case is MTFractionDisplay, is MTRadicalDisplay:
-            // The caret goes before the fraction or radical.
+        case is MTFractionDisplay, is MTRadicalDisplay, is MTAccentDisplay, is MTLineDisplay:
+            // The caret goes before the fraction, radical, accent or line.
             return index.subIndexType == .none ? position : nil
         default: return nil
         }
+    }
+}
+
+extension MTDisplay {
+    /// An accent or an over/underline: before it, after it, or in its content.
+    fileprivate func wrapperClosestIndex(to point: CGPoint, inner: MTMathListDisplay?) -> MTMathListIndex? {
+        if point.x < position.x - kPixelDelta { return MTMathListIndex(level0Index: range.location) }
+        if point.x > position.x + width + kPixelDelta { return MTMathListIndex(level0Index: NSMaxRange(range)) }
+        guard let inner else { return nil }
+        return MTMathListIndex(at: range.location, with: inner.closestIndex(to: point), type: .innerList)
     }
 }
 
@@ -222,6 +234,7 @@ extension MTMathListDisplay {
         case .none, .nucleus: return display
         case .numerator, .denominator: return (display as? MTFractionDisplay)?.subDisplay(for: index.subIndexType)
         case .radicand, .degree: return (display as? MTRadicalDisplay)?.subDisplay(for: index.subIndexType)
+        case .innerList: return (display as? MTAccentDisplay)?.accentee ?? (display as? MTLineDisplay)?.inner
         case .superscript, .ssubscript: return nil
         }
     }

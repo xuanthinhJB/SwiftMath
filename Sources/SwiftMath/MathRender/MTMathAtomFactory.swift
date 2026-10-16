@@ -904,7 +904,16 @@ public class MTMathAtomFactory {
     /** Returns the accent name for the given accent. This is the reverse of the above
      function. */
     public static func accentName(_ accent: MTAccent) -> String? {
-        accentValueToName[accent.nucleus]
+        // Several commands share a combining character; the flags tell them apart.
+        switch accent.nucleus {
+        case "\u{0302}": return accent.isWide ? "widehat" : "hat"
+        case "\u{0303}": return accent.isWide ? "widetilde" : "tilde"
+        case "\u{20D7}": return accent.isStretchy ? "overrightarrow" : "vec"
+        case "\u{20D6}": return "overleftarrow"
+        case "\u{20E1}": return "overleftrightarrow"
+        case "\u{23DC}": return "overparen"
+        default: return accentValueToName[accent.nucleus]
+        }
     }
     
     /** Creates a new boundary atom for the given delimiter name. If the delimiter name
