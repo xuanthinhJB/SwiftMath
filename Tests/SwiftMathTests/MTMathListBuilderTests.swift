@@ -2205,8 +2205,8 @@ final class MTMathListBuilderTests: XCTestCase {
         let testCases = [
             ("\\vec{x}", "\\vec{x}"),
             ("\\overleftarrow{AB}", "\\overleftarrow{AB}"),
-            // Note: \overrightarrow maps to same Unicode as \vec, so it converts to \vec
-            ("\\overrightarrow{v}", "\\vec{v}"),
+            // \overrightarrow shares \vec's character; its stretchy flag keeps it apart.
+            ("\\overrightarrow{v}", "\\overrightarrow{v}"),
             ("\\overleftrightarrow{AC}", "\\overleftrightarrow{AC}")
         ]
 
